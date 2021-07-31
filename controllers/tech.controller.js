@@ -37,23 +37,36 @@ exports.create = (req,res) => {
         }
         else{
             console.log("email already used");
-            return;
+            res.send(null);
         }
     });
 };
 
 exports.find = (req,res) =>{
-    
     const tech = Tech.findOne({ where: {email: req.body.email}})
-    if(tech === null){
-        console.log("email not found");
-    }
-    else{
-        if(bcrypt.compareSync(req.body.password,tech.password)){
-            console.log("connected");
+    .then(tech => {
+        if(tech === null){
+            console.log("email not found");
+            res.send(null);
         }
         else{
-            console.log("wrong password");
+            if(bcrypt.compareSync(req.body.password,tech.password)){
+                console.log("connected");
+                console.log(tech.get({ plain: true }));
+                res.send(tech);
+            }
+            else{
+                console.log("wrong password");
+                res.send(null);
+            }
         }
-    }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error connectiong user"
+        })
+    })
+    .finally(() =>{
+        return true
+    })
 };

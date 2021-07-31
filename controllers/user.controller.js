@@ -1,7 +1,7 @@
 const db = require("../model");
-const { use } = require("../routes/tech.routes");
+const { use } = require("../routes/user.routes");
+const bcrypt = require('bcrypt');
 const User = db.users;
-const Op = db.Sequelize.Op;
 
 exports.create = (req,res) => {
     if(!req.body.firstName|
@@ -15,38 +15,60 @@ exports.create = (req,res) => {
         return;
     }
 
+    var hash = bcrypt.hashSync(req.body.password,10);
+
     const user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
+        password: hash,
         company: req.body.company
     }
 
-    User.create(user)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: err.message || "Error"
-        });
+    User.findOne({ where: {email: req.body.email} }).then(function(result){
+        if(result === null){
+            User.create(user)
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || "Error"
+                });
+            });
+        }
+        else {
+            console.log("email already used");
+            res.send(null);
+        }
     });
 };
 
 exports.find =(req,res) =>{
-    const email = req.query.email;
-    const password = req.body.password;
-    let condition = email ? {email:{[Op.iLike]:`%${email}%`}} : null;
-
-    Tech.findOne({ where: condition})
-    .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
+    const user = User.findOne({ where: {email: req.body.email}})
+    .then(user => {
+        if(user === null){
+            console.log("email not found");
+            res.send(null);
+        }
+        else{
+            if(bcrypt.compareSync(req.body.password,user.password)){
+                console.log("connected");
+                console.log(user.get({ plain: true }));
+                res.send(user);
+            }
+            else{
+                console.log("wrong password");
+                res.send(null);
+            }
+        }
+    })
+    .catch(err => {
         res.status(500).send({
-          message:
-            err.message || "Some error occurred"
-        });
-      });
+            message: "Error connectiong user"
+        })
+    })
+    .finally(() =>{
+        return true
+    })
 };
