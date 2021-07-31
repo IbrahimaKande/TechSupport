@@ -1,0 +1,32 @@
+Coding project
+
+The goal of this round is to develop a small app in which users can ask for IT support from technicians.
+
+There is no time limit. Take the time you need and once you're ready, tell us :) You will find below a list of features for the app. Develop as many as you want (no need to develop everything). And you should develop the app your way, meaning :
+
+by seriously developing the parts that show your skills
+by mocking the other parts
+For example, if you want to focus on the front-end then develop the front and mock the back. Or the other way around if you want to show your back-end skills. You can also develop seriously only one part of the front and one part of the back if you want to show your full-stack skills.
+
+Features :
+
+the app should manage 2 types of users : normal users who need IT help and technicians who offer support
+users and technicians can chat together in conversations composed by 1 user and 1 technician
+technicians can open a support ticket for any given message in the past. This message is the starting message of the ticket.
+technicians can close an open ticket by choosing any message in the conversation. This message will be the closing message of the ticket.
+tickets have the following fields :
+creation date (automatically populated with the date of the starting message)
+closing date (automatically populated with the date of the closing message)
+a topic (free text that the technicians can set when he/she opens a ticket)
+messages (automatically populated, all the messages between the starting message and the closing message)
+status : open / closed (automatically populated)
+user : the name of the user (automatically populated)
+technician : the name of the technician dealing with the ticket (automatically populated)
+technicians can merge 2 tickets if they belong to the same topic and correspond to the same user
+a survey is automatically sent to the user once a ticket is closed to get the satisfaction of the user
+any feature that will make the app smarter from your point of view
+Allowed languages
+
+HTML, CSS, Javascript, Typescript
+Python, Go
+SQL

@@ -10,7 +10,7 @@ db.sequelize.sync({ force: true }).then(() => {
 });
 
 let corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:3000"
 };
 
 let techRoutes = require("./routes/tech.routes");
