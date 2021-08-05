@@ -7,11 +7,17 @@ module.exports = (sequelize, Sequelize) => {
         },
         description:{
             type: Sequelize.STRING
+        },
+        userId: {
+            type: Sequelize.INTEGER
         }
     });
 
-    Request.associate = models => {
-        Request.belongsTo(models.User);
+    Request.associate = model => {
+        Request.belongsTo(model.user.model, {
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
+        });
     };
 
     return Request;

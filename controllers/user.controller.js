@@ -85,7 +85,8 @@ exports.createRequest = (req,res) => {
 
     const request = {
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        userId: req.body.userId
     }
 
     Request.create(request)
