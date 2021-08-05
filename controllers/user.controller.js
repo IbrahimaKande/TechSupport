@@ -2,6 +2,7 @@ const db = require("../model");
 const { use } = require("../routes/user.routes");
 const bcrypt = require('bcrypt');
 const User = db.users;
+const Request = db.request;
 
 exports.create = (req,res) => {
     if(!req.body.firstName|
@@ -71,4 +72,29 @@ exports.find =(req,res) =>{
     .finally(() =>{
         return true
     })
+};
+
+exports.createRequest = (req,res) => {
+    if(!req.body.title |
+        !req.body.description){
+        res.status(400).send({
+            message: "Empty fields!"
+        });
+        return;
+    }
+
+    const request = {
+        title: req.body.title,
+        description: req.body.description
+    }
+
+    Request.create(request)
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Error"
+        });
+    });
 };

@@ -22,5 +22,6 @@ db.sequelize = sequelize;
 db.techs = require("./tech.model")(sequelize, Sequelize);
 db.users = require("./user.model")(sequelize, Sequelize);
 db.tickets = require("./ticket.model")(sequelize, Sequelize);
+db.request = require("./request.model")(sequelize, Sequelize);
 
 module.exports = db;

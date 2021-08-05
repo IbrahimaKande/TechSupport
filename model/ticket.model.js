@@ -16,15 +16,5 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN
         },
     });
-
-    queryInterface.addConstraint('tickets', {
-        fields: ['tech_id'],
-        type: 'foreign key',
-        references: {
-            table: 'techs',
-            field: 'id'
-        }
-    })
-
     return Tickets;
 };
