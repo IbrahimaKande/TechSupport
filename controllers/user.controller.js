@@ -73,29 +73,3 @@ exports.find =(req,res) =>{
         return true
     })
 };
-
-exports.createRequest = (req,res) => {
-    if(!req.body.title |
-        !req.body.description){
-        res.status(400).send({
-            message: "Empty fields!"
-        });
-        return;
-    }
-
-    const request = {
-        title: req.body.title,
-        description: req.body.description,
-        userId: req.body.userId
-    }
-
-    Request.create(request)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: err.message || "Error"
-        });
-    });
-};
