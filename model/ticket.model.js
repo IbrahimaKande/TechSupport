@@ -6,17 +6,20 @@ module.exports = (sequelize, Sequelize) => {
         topic:{
             type: Sequelize.STRING
         },
-        userId:{
-            type: Sequelize.INTEGER
-        },
         techId:{
             type: Sequelize.INTEGER
+        },
+        userId:{
+            type: Sequelize.STRING
         },
         status:{
             type: Sequelize.STRING
         },
         requestId:{
             type: Sequelize.INTEGER
+        },
+        messages:{
+            type: Sequelize.RANGE(Sequelize.INTEGER)
         }
     });
 

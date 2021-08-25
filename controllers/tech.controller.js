@@ -70,3 +70,9 @@ exports.find = (req,res) =>{
         return true
     })
 };
+
+exports.findById = (id) => {
+    var tech = Tech.findByPk(id)
+    var name = tech.firstName + " " + tech.lastName
+    return name
+}

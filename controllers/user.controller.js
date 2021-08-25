@@ -73,3 +73,9 @@ exports.find =(req,res) =>{
         return true
     })
 };
+
+exports.findById = (id) => {
+    var user = user.findByPk(id)
+    var name = user.firstName + " " + user.lastName
+    return name
+};

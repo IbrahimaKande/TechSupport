@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         userId: {
             type: Sequelize.INTEGER
+        },
+        available:{
+            type: Sequelize.BOOLEAN
         }
     });
 
