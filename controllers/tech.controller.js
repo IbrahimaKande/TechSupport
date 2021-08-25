@@ -9,8 +9,8 @@ exports.create = (req,res) => {
         !req.body.password){
         res.status(400).send({
             message: "Empty fields!"
-        });
-        return;
+        })
+        return
     }
 
     var hash = bcrypt.hashSync(req.body.password,10);
@@ -21,42 +21,42 @@ exports.create = (req,res) => {
         email: req.body.email,
         password: hash,
         nTickets: 0,
-    };
+    }
 
     Tech.findOne({ where: {email: req.body.email} }).then(function(result){
         if(result === null){
             Tech.create(tech)
             .then(data => {
-                res.send(data);
+                res.send(data)
             })
             .catch(err => {
                 res.status(500).send({
                     message: err.message || "Error"
-                });
-            });
+                })
+            })
         }
         else{
-            console.log("email already used");
-            res.send(null);
+            console.log("email already used")
+            res.send(null)
         }
-    });
+    })
 };
 
 exports.find = (req,res) =>{
     const tech = Tech.findOne({ where: {email: req.body.email}})
     .then(tech => {
         if(tech === null){
-            console.log("email not found");
+            console.log("email not found")
             res.send(null);
         }
         else{
             if(bcrypt.compareSync(req.body.password,tech.password)){
                 console.log("connected");
-                console.log(tech.get({ plain: true }));
+                console.log(tech.get({ plain: true }))
                 res.send(tech);
             }
             else{
-                console.log("wrong password");
+                console.log("wrong password")
                 res.send(null);
             }
         }
@@ -75,4 +75,4 @@ exports.findById = (id) => {
     var tech = Tech.findByPk(id)
     var name = tech.firstName + " " + tech.lastName
     return name
-}
+};

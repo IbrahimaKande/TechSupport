@@ -26,7 +26,7 @@ exports.create = (req,res) => {
             message: error.message || "Error"
         })
     })
-}
+};
 
 exports.findAll = (req,res) => {
     Request.findAll()
@@ -38,7 +38,7 @@ exports.findAll = (req,res) => {
             message: error.message || "Error"
         })
     })
-}
+};
 
 exports.findByUserId = (req,res) => {
     Request.findAll({ where: {userId: req.params.id} })
@@ -50,7 +50,7 @@ exports.findByUserId = (req,res) => {
             message: error.message || "Error"
         })
     })
-}
+};
 
 exports.available = (req,res) => {
     Request.findAll({ where: {available: true}})
@@ -62,9 +62,9 @@ exports.available = (req,res) => {
             message: error.message || "Error"
         })
     })
-}
+};
 
 exports.findUser = (id) => {
     var request = Request.findByPk(id)
     return request.userId
-}
+};

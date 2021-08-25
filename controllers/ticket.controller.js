@@ -2,11 +2,49 @@ const db = require("../model");
 const Ticket = db.tickets;
 const Request = db.request;
 const Chatroom = db.chatroom;
+const Message = db.message;
+const Tech = db.techs;
+const User = db.users;
+
+loadUser = async (requestId) => {
+    var request = await Request.findOne({ where:{id: requestId} })
+    console.log(request)
+    var user = await User.findByPk(request.userId)
+    console.log(user)
+    const res = {
+        name: user.firstName + " " + user.lastName,
+        email: user.email
+    }
+
+    var data = JSON.stringify(res)
+    console.log(data)
+    return data
+}
+
+loadTech = async (id) => {
+    var tech = await Tech.findByPk(id)
+    const res = {
+        name: tech.firstName + " " + tech.lastName,
+        email: tech.email
+    }
+    var data = JSON.stringify(res)
+    console.log(data)
+    console.log(typeof data)
+    return data
+}
 
 check = async (requestId, techId) => {
     var chat = await Chatroom.findOne({ where: {requestId: requestId, techId: techId} });
     console.log(chat)
     return chat.id
+}
+
+loadMessages = async (chatroomId) => {
+    var messages = await Message.findAll({ raw: true, where: {chatroomId: chatroomId}, attributes:['text'] })
+    var stringMessages = JSON.stringify(messages)
+    console.log(stringMessages)
+    console.log(typeof stringMessages)
+    return stringMessages
 }
 
 exports.create = async (req,res) => {
@@ -35,13 +73,16 @@ exports.create = async (req,res) => {
                 res.send(null);
             }
             else{
+                var room = await check(req.body.requestId, req.params.id)
                 const ticket = {
                     topic: req.body.topic,
                     techId: req.params.id,
+                    tech: await loadTech(req.params.id),
+                    user: await loadUser(req.body.requestId),
                     status: 'open',
                     requestId: req.body.requestId,
-                    chatroom: await check(req.body.requestId, req.params.id)
-                    
+                    chatroom: room,
+                    messages: await loadMessages(room)
                 }
 
                 Ticket.create(ticket)
@@ -56,11 +97,11 @@ exports.create = async (req,res) => {
                 .catch(error => {
                     res.status(500).send({
                         message: error.message || "Error"
-                    });
-                });
+                    })
+                })
             }
         }
-    });
+    })
 };
 
 exports.findAll = (req,res) => {
@@ -71,8 +112,8 @@ exports.findAll = (req,res) => {
     .catch(error => {
         res.status(500).send({
             message: error.message || "Error"
-        });
-    });
+        })
+    })
 };
 
 exports.close = (req,res) => {
@@ -84,4 +125,4 @@ exports.close = (req,res) => {
     .then(data => {
         res.send(data)
     })
-}
+};

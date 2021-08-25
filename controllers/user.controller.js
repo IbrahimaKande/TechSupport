@@ -12,7 +12,7 @@ exports.create = (req,res) => {
         !req.body.company){
         res.status(400).send({
             message: "Empty fields!"
-        });
+        })
         return;
     }
 
@@ -35,14 +35,14 @@ exports.create = (req,res) => {
             .catch(err => {
                 res.status(500).send({
                     message: err.message || "Error"
-                });
-            });
+                })
+            })
         }
         else {
             console.log("email already used");
             res.send(null);
         }
-    });
+    })
 };
 
 exports.find =(req,res) =>{

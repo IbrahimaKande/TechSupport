@@ -5,9 +5,6 @@ module.exports = (sequelize, Sequelize) => {
         requestId:{
             type: Sequelize.INTEGER
         },
-        /*userId:{
-            type: Sequelize.INTEGER
-        },*/
         techId:{
             type: Sequelize.INTEGER
         }

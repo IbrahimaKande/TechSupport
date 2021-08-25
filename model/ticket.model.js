@@ -9,6 +9,12 @@ module.exports = (sequelize, Sequelize) => {
         techId:{
             type: Sequelize.INTEGER
         },
+        tech:{
+            type: Sequelize.STRING
+        },
+        user:{
+            type: Sequelize.STRING
+        },
         status:{
             type: Sequelize.STRING
         },
@@ -17,6 +23,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         chatroom:{
             type: Sequelize.INTEGER
+        },
+        messages:{
+            type: Sequelize.STRING
         }
     });
 

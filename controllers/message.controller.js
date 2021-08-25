@@ -20,7 +20,7 @@ check = async (requestId, techId) => {
     else{
         return chat.id
     }
-}
+};
 
 exports.response = async (req, res) => {
 
@@ -39,7 +39,7 @@ exports.response = async (req, res) => {
             message: error.message || "Error"
         })
     })
-}
+};
 
 exports.post = (req,res) => {
     const message = {
@@ -57,7 +57,7 @@ exports.post = (req,res) => {
             message: error.message || "Error"
         })
     })
-}
+};
 
 exports.findByChatroom = (id) => {
     var messages = Message.findAll({
@@ -65,9 +65,9 @@ exports.findByChatroom = (id) => {
     })
 
     return messages
-}
+};
 
 exports.findChatroom = (techId, requestId) => {
     var chatroom = Chatroom.findOne({ where:{ techId:techId, requestId:requestId} })
     return chatroom.id
-}
+};
