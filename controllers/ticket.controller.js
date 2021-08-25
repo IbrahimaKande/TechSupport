@@ -1,12 +1,19 @@
 const db = require("../model");
 const Ticket = db.tickets;
 const Request = db.request;
+const Chatroom = db.chatroom;
 
-exports.create = (req,res) => {
+check = async (requestId, techId) => {
+    var chat = await Chatroom.findOne({ where: {requestId: requestId, techId: techId} });
+    console.log(chat)
+    return chat.id
+}
+
+exports.create = async (req,res) => {
     var user
     
-    Ticket.findAndCountAll({ where:{techId: req.params.id, status: 'open'} },{raw:true})
-    .then(data => {
+    await Ticket.findAndCountAll({ where:{techId: req.params.id, status: 'open'} },{raw:true})
+    .then(data = async() => {
         console.log(data);
         if(data.count == 2){
             console.log("You can't open more than two tickets");
@@ -32,7 +39,9 @@ exports.create = (req,res) => {
                     topic: req.body.topic,
                     techId: req.params.id,
                     status: 'open',
-                    requestId: req.body.requestId
+                    requestId: req.body.requestId,
+                    chatroom: await check(req.body.requestId, req.params.id)
+                    
                 }
 
                 Ticket.create(ticket)

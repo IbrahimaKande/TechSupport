@@ -9,17 +9,14 @@ module.exports = (sequelize, Sequelize) => {
         techId:{
             type: Sequelize.INTEGER
         },
-        userId:{
-            type: Sequelize.STRING
-        },
         status:{
             type: Sequelize.STRING
         },
         requestId:{
             type: Sequelize.INTEGER
         },
-        messages:{
-            type: Sequelize.RANGE(Sequelize.INTEGER)
+        chatroom:{
+            type: Sequelize.INTEGER
         }
     });
 
