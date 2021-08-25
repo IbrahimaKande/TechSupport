@@ -13,7 +13,7 @@ exports.create = async (req,res) => {
     var user
     
     await Ticket.findAndCountAll({ where:{techId: req.params.id, status: 'open'} },{raw:true})
-    .then(data = async() => {
+    .then(async (data) => {
         console.log(data);
         if(data.count == 2){
             console.log("You can't open more than two tickets");
